@@ -1,0 +1,62 @@
+﻿<Application x:Class="GoldShop.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:pdtt="https://github.com/Behnam2064/PersianDateTimeWPFTools"
+             StartupUri="MainWindow.xaml">
+
+    <Application.Resources>
+
+        <ResourceDictionary>
+
+            <!-- ========================================== -->
+            <!-- IMPORT PERSIAN DATETIME PICKER RESOURCES   -->
+            <!-- ========================================== -->
+            <ResourceDictionary.MergedDictionaries>
+                <pdtt:InitResources />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- ========================================== -->
+            <!-- GLOBAL FONT: Iranian Sans                  -->
+            <!-- ========================================== -->
+
+            <!-- TextBlock (labels, titles) -->
+            <Style TargetType="TextBlock">
+                <Setter Property="FontFamily" 
+                        Value="pack://application:,,,/Fonts/#Vazir" />
+                
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+            <!-- TextBox (input fields) -->
+            <Style TargetType="TextBox">
+                <Setter Property="FontFamily" 
+                        Value="pack://application:,,,/Fonts/#Vazir" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+            <!-- Button -->
+            <Style TargetType="Button">
+                <Setter Property="FontFamily" 
+                        Value="pack://application:,,,/Fonts/#Vazir" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+            <!-- Centers the text inside every DataGrid cell globally -->
+            <Style TargetType="DataGridCell">
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+
+            <!-- Centers the text inside every DataGrid column header globally -->
+            <Style TargetType="DataGridColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+            </Style>
+            <!-- 
+                IMPORTANT: 
+                No global "Control" style – this keeps the PersianDatePicker working!
+            -->
+
+        </ResourceDictionary>
+
+    </Application.Resources>
+
+</Application>

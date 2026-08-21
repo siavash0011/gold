@@ -1,0 +1,468 @@
+﻿<UserControl x:Class="GoldShop.Pages.HistoryPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:pdtt="https://github.com/Behnam2064/PersianDateTimeWPFTools"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+
+    <Grid Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <!-- ================================================= -->
+        <!-- FILTER PANEL -->
+        <!-- ================================================= -->
+
+        <Border Grid.Row="0"
+                Background="#F0F0F0"
+                CornerRadius="8"
+                Padding="15"
+                Margin="0,0,0,15">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+
+               
+
+
+                <!-- END DATE -->
+
+                <TextBlock Grid.Column="2"
+                           Text="تا تاریخ:"
+                           FontWeight="SemiBold"
+                           VerticalAlignment="Center"
+                           Margin="15,0,10,0"/>
+
+                <pdtt:PersianDatePicker Grid.Column="3"
+                                        x:Name="EndDatePicker"
+                                        Height="30"
+                                        Width="130"
+                                        CustomCultureName="fa-IR"
+                                        SelectedDateChanged="DatePicker_SelectedDateChanged"/>
+                <!-- START DATE -->
+
+                <TextBlock Grid.Column="0"
+            Text="از تاریخ:"
+            FontWeight="SemiBold"
+            VerticalAlignment="Center"
+            Margin="0,0,10,0"/>
+
+                <pdtt:PersianDatePicker Grid.Column="1"
+                         x:Name="StartDatePicker"
+                         Height="30"
+                         Width="130"
+                         CustomCultureName="fa-IR"
+                         SelectedDateChanged="DatePicker_SelectedDateChanged"/>
+
+                <!-- QUICK FILTERS -->
+
+                <StackPanel Grid.Column="4"
+                            Orientation="Horizontal"
+                            Margin="15,0,0,0">
+
+                    <Button Content="امروز"
+                            Width="60"
+                            Height="30"
+                            Margin="0,0,5,0"
+                            Click="Today_Click"/>
+
+                    <Button Content="این هفته"
+                            Width="70"
+                            Height="30"
+                            Margin="0,0,5,0"
+                            Click="ThisWeek_Click"/>
+
+                    <Button Content="این ماه"
+                            Width="70"
+                            Height="30"
+                            Click="ThisMonth_Click"/>
+
+                </StackPanel>
+
+
+                <!-- SPACER -->
+
+                <TextBlock Grid.Column="5"/>
+
+
+                <!-- PRINT -->
+
+                <Button Grid.Column="6"
+                        Content="🖨️ چاپ"
+                        Width="80"
+                        Height="30"
+                        Background="#27AE60"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        Click="Print_Click"/>
+
+            </Grid>
+
+        </Border>
+
+
+        <!-- ================================================= -->
+        <!-- DATA GRID -->
+        <!-- ================================================= -->
+
+        <DataGrid Grid.Row="1"
+                  x:Name="TransactionsGrid"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  MaxHeight="500"
+                  AlternatingRowBackground="#F5F5F5"
+                  GridLinesVisibility="Horizontal"
+                  HeadersVisibility="Column"
+                  CanUserSortColumns="True"
+                  HorizontalContentAlignment="Center">
+
+
+            <!-- ================================================= -->
+            <!-- COLUMNS -->
+            <!-- ================================================= -->
+
+            <DataGrid.Columns>
+
+
+                <!-- DATE -->
+
+                <DataGridTextColumn Header="تاریخ خرید"
+                                    Binding="{Binding Date,
+                                              StringFormat=yyyy/MM/dd,
+                                              ConverterCulture=fa-IR}"
+                                    Width="90">
+
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment"
+                                    Value="Stretch"/>
+                            <Setter Property="TextAlignment"
+                                    Value="Center"/>
+                            <Setter Property="VerticalAlignment"
+                                    Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+
+
+                <!-- CUSTOMER -->
+
+                <DataGridTextColumn Header="مشتری"
+                                    Binding="{Binding CustomerName}"
+                                    Width="100">
+
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment"
+                                    Value="Stretch"/>
+                            <Setter Property="TextAlignment"
+                                    Value="Center"/>
+                            <Setter Property="VerticalAlignment"
+                                    Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+
+
+                <!-- PHONE -->
+
+                <DataGridTextColumn Header="تلفن"
+                                    Binding="{Binding PhoneNumber}"
+                                    Width="90">
+
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment"
+                                    Value="Stretch"/>
+                            <Setter Property="TextAlignment"
+                                    Value="Center"/>
+                            <Setter Property="VerticalAlignment"
+                                    Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+
+
+                <!-- WEIGHT -->
+
+                <DataGridTextColumn Header="وزن به گرم"
+                                    Binding="{Binding Weight,
+                                              StringFormat=N2}"
+                                    Width="80">
+
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment"
+                                    Value="Stretch"/>
+                            <Setter Property="TextAlignment"
+                                    Value="Center"/>
+                            <Setter Property="VerticalAlignment"
+                                    Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+
+
+                <!-- COST PER GRAM -->
+
+                <DataGridTextColumn Header="نرخ"
+                                    Binding="{Binding CostPerGram,
+                                              StringFormat=N0}"
+                                    Width="100">
+
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment"
+                                    Value="Stretch"/>
+                            <Setter Property="TextAlignment"
+                                    Value="Center"/>
+                            <Setter Property="VerticalAlignment"
+                                    Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+                <!-- PURITY -->
+
+                <DataGridTextColumn Header="عیار"
+                     Binding="{Binding Purity}"
+                     Width="60">
+
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment"
+                     Value="Stretch"/>
+                            <Setter Property="TextAlignment"
+                     Value="Center"/>
+                            <Setter Property="VerticalAlignment"
+                     Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+                <!-- FINAL COST -->
+
+                <DataGridTextColumn Header="بهای نهایی"
+                     Binding="{Binding FinalCost,
+                               StringFormat=N0}"
+                     Width="110">
+
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment"
+                     Value="Stretch"/>
+                            <Setter Property="TextAlignment"
+                     Value="Center"/>
+                            <Setter Property="VerticalAlignment"
+                     Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+               
+
+                <!-- SELLER COST -->
+
+                <DataGridTextColumn Header="سود فروشنده"
+                     Binding="{Binding SellerCost,
+                               StringFormat=N0}"
+                     Width="120">
+
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment"
+                     Value="Stretch"/>
+                            <Setter Property="TextAlignment"
+                     Value="Center"/>
+                            <Setter Property="VerticalAlignment"
+                     Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+                <!-- SELLER PERCENTAGE -->
+
+                <DataGridTextColumn Header="سود فروشنده %"
+                                    Binding="{Binding SellerPercentage,
+                                              StringFormat=N0}"
+                                    Width="100">
+
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment"
+                                    Value="Stretch"/>
+                            <Setter Property="TextAlignment"
+                                    Value="Center"/>
+                            <Setter Property="VerticalAlignment"
+                                    Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+                <!-- MAKING COST -->
+
+                <DataGridTextColumn Header="اجرت ساخت"
+                      Binding="{Binding MakingCost,
+                                StringFormat=N0}"
+                      Width="110">
+
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment"
+                      Value="Stretch"/>
+                            <Setter Property="TextAlignment"
+                      Value="Center"/>
+                            <Setter Property="VerticalAlignment"
+                      Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+
+                <!-- MAKING PERCENTAGE -->
+
+                <DataGridTextColumn Header="اجرت ساخت %"
+                                    Binding="{Binding MakingPercentage,
+                                              StringFormat=N0}"
+                                    Width="100">
+
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment"
+                                    Value="Stretch"/>
+                            <Setter Property="TextAlignment"
+                                    Value="Center"/>
+                            <Setter Property="VerticalAlignment"
+                                    Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+
+
+              
+
+
+                <!-- TAX PERCENTAGE -->
+
+                <DataGridTextColumn Header="مالیات %"
+                                    Binding="{Binding TaxPercentage,
+                                              StringFormat=N0}"
+                                    Width="80">
+
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment"
+                                    Value="Stretch"/>
+                            <Setter Property="TextAlignment"
+                                    Value="Center"/>
+                            <Setter Property="VerticalAlignment"
+                                    Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+
+
+                <!-- TAX -->
+
+                <DataGridTextColumn Header="مالیات"
+                                    Binding="{Binding Tax,
+                                              StringFormat=N0}"
+                                    Width="100">
+
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment"
+                                    Value="Stretch"/>
+                            <Setter Property="TextAlignment"
+                                    Value="Center"/>
+                            <Setter Property="VerticalAlignment"
+                                    Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+
+
+
+                <DataGridTextColumn Header="یادداشت" Binding="{Binding Note}" Width="150"/>
+
+
+                <!-- CREATED AT -->
+
+                <DataGridTextColumn Header=" زمان ثبت رکورد"
+                                    Binding="{Binding CreatedAt,
+                                              StringFormat=yyyy/MM/dd HH:mm:ss,
+                                              ConverterCulture=fa-IR}"
+                                    Width="150">
+
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment"
+                                    Value="Stretch"/>
+                            <Setter Property="TextAlignment"
+                                    Value="Center"/>
+                            <Setter Property="VerticalAlignment"
+                                    Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+
+
+                <!-- DELETE -->
+
+                <DataGridTemplateColumn Header="عملیات"
+                                        Width="70">
+
+                    <DataGridTemplateColumn.CellTemplate>
+
+                        <DataTemplate>
+
+                            <Button Content="حذف"
+                                    Background="#E74C3C"
+                                    Foreground="White"
+                                    FontWeight="Bold"
+                                    BorderThickness="0"
+                                    Padding="5,2"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Click="DeleteButton_Click"
+                                    Tag="{Binding Id}"/>
+
+                        </DataTemplate>
+
+                    </DataGridTemplateColumn.CellTemplate>
+
+                </DataGridTemplateColumn>
+
+
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,39 @@
+﻿<Window x:Class="GoldShop.Pages.AdjustGoldStockDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="اصلاح موجودی طلا" Height="320" Width="400"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        FlowDirection="RightToLeft">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="موجودی فعلی:" FontWeight="SemiBold"/>
+        <TextBlock x:Name="CurrentStockText" FontSize="18" FontWeight="Bold" Margin="0,20,0,10"/>
+
+        <StackPanel Grid.Row="1" Margin="0,0,0,10">
+            <TextBlock Text="نوع عملیات" FontWeight="SemiBold" Margin="0,0,0,5"/>
+            <ComboBox x:Name="OperationCombo" Height="30" SelectedIndex="0">
+                <ComboBoxItem Content="افزایش موجودی (گرم)"/>
+                <ComboBoxItem Content="کاهش موجودی (گرم)"/>
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2">
+            <TextBlock Text="مقدار (گرم):" FontWeight="SemiBold" Margin="0,0,0,5"/>
+            <TextBox x:Name="AmountBox" Height="30" VerticalContentAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,20,0,0">
+            <Button Content="ثبت" Width="80" Height="30" Click="Save_Click"
+                    Background="#4CAF50" Foreground="White" FontWeight="Bold"/>
+            <Button Content="انصراف" Width="80" Height="30" Margin="10,0,0,0" Click="Cancel_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,48 @@
+﻿<Window x:Class="GoldShop.Pages.ClientSelectDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="انتخاب مشتری" Height="450" Width="600"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        FlowDirection="RightToLeft">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBox x:Name="SearchBox" Grid.Row="0" Height="30"
+                 VerticalContentAlignment="Center"
+                 TextChanged="SearchBox_TextChanged"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,10">
+            <Button Content="➕ افزودن" Height="30" Padding="10,0"
+                    Click="AddClient_Click" Background="#4CAF50" Foreground="White"/>
+            <Button Content="✏️ ویرایش" Height="30" Padding="10,0" Margin="5,0,0,0"
+                    Click="EditClient_Click" Background="#2196F3" Foreground="White"/>
+            <Button Content="🗑️ حذف" Height="30" Padding="10,0" Margin="5,0,0,0"
+                    Click="DeleteClient_Click" Background="#F44336" Foreground="White"/>
+          
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" x:Name="ClientsGrid"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="نام" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="تلفن" Binding="{Binding Phone}" Width="120"/>
+                <DataGridTextColumn Header="موجودی" Binding="{Binding CurrentStock}" Width="80"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,10,0,0">
+            <Button Content="انتخاب" Width="80" Height="30" Click="Select_Click"
+                    Background="#4CAF50" Foreground="White" FontWeight="Bold"/>
+            <Button Content="انصراف" Width="80" Height="30" Margin="10,0,0,0" Click="Cancel_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
