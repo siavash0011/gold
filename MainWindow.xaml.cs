@@ -66,6 +66,11 @@ namespace GoldShop
             MainContent.Content = new DashboardPage();
             SelectButton(BtnDashboard);
         }
+        private void SecondHand_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new SecondHandGoldPage();
+            SelectButton(BtnSecondHand);
+        }
 
     }
 }

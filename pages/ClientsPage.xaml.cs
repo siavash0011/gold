@@ -15,8 +15,11 @@ using System.Text.Json;
 namespace GoldShop.Pages
 
 {
+
     public partial class ClientsPage : UserControl
     {
+        public event EventHandler? ClientTransactionDeleted;
+
         private bool _isCostFormatting;
         private static readonly CultureInfo PersianCulture = new CultureInfo("fa-IR");
         private readonly PersianCalendar _persianCalendar = new PersianCalendar();
@@ -559,6 +562,37 @@ namespace GoldShop.Pages
             ClearClientDashboard();
             MessageBox.Show("مشتری انتخاب شده حذف شده است.", "خطا", MessageBoxButton.OK, MessageBoxImage.Warning);
             return false;
+        }
+        private void DeleteTransaction_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button == null) return;
+            int transactionId = Convert.ToInt32(button.Tag);
+
+            var result = MessageBox.Show("آیا مطمئن هستید که این تراکنش حذف شود؟",
+                                         "تأیید حذف",
+                                         MessageBoxButton.YesNo,
+                                         MessageBoxImage.Warning);
+            if (result != MessageBoxResult.Yes) return;
+
+            using (var db = new AppDbContext())
+            {
+                var transaction = db.ClientTransactions.Find(transactionId);
+                if (transaction == null) return;
+
+                db.ClientTransactions.Remove(transaction);
+                db.SaveChanges();
+            }
+
+            // Refresh selected client's transactions and stock
+            if (_selectedClient != null)
+            {
+                ClientStockText.Text = $"موجودی: {GetClientStock(_selectedClient.Id):N3} گرم";
+                LoadClientTransactions(_selectedClient.Id);
+            }
+
+            // Notify dashboard to update profit
+            ClientTransactionDeleted?.Invoke(this, EventArgs.Empty);
         }
     }
 

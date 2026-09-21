@@ -41,7 +41,7 @@ Icon="/GoldShop;component/Images/logo.ico"
                 <!-- ========================================== -->
 
                 <Button x:Name="BtnBuySell"
-                        Content="فروش طلا"
+                        Content="فروش طلای نو"
                         Height="55"
                         Margin="0,5"
                         Background="#D4AF37"
@@ -55,8 +55,10 @@ Icon="/GoldShop;component/Images/logo.ico"
                 <Button x:Name="BtnDashboard"
         Height="55"
         Margin="0,5"
-        Background="#D4AF37"
-        Foreground="White"
+        Background="Transparent"
+        Foreground="#333"
+        BorderBrush="#D4AF37"
+        BorderThickness="1"
         FontWeight="Bold"
         Click="Dashboard_Click">
                     <StackPanel>
@@ -64,7 +66,15 @@ Icon="/GoldShop;component/Images/logo.ico"
                         <TextBlock Text="طلای آب شده" HorizontalAlignment="Center" FontSize="11" Opacity="0.9"/>
                     </StackPanel>
                 </Button>
-
+                <Button x:Name="BtnSecondHand"
+        Content="طلای دسته دوم"
+        Height="45"
+        Margin="0,5"
+        Background="Transparent"
+        Foreground="#333"
+        BorderBrush="#D4AF37"
+        BorderThickness="1"
+        Click="SecondHand_Click"/>
 
 
 

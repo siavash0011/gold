@@ -148,6 +148,15 @@
                 <DataGridTextColumn Header="موجودی بعد از تراکنش" Binding="{Binding RunningStock, StringFormat=N3}" Width="130"/>
                 <DataGridTextColumn Header="تاریخ" Binding="{Binding DateDisplay}" Width="120"/>
                 <DataGridTextColumn Header="یادداشت" Binding="{Binding Note}" Width="200"/>
+                <DataGridTemplateColumn Header="حذف" Width="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="🗑" Background="Transparent" BorderThickness="0"
+                            Click="DeleteTransaction_Click" Tag="{Binding Id}"
+                            ToolTip="حذف این تراکنش"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

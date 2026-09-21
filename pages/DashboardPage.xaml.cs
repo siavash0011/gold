@@ -25,6 +25,13 @@ namespace GoldShop.Pages
 
             // ✅ Subscribe to event from ClientsPage
             ClientsPageControl.TransactionSaved += OnTransactionSaved;
+            ClientsPageControl.ClientTransactionDeleted += OnClientTransactionDeleted;
+
+        }
+        private void OnClientTransactionDeleted(object? sender, EventArgs e)
+        {
+            UpdateProfitSummary();
+            LoadClientTransactions(null, null);
         }
 
         private void OnTransactionSaved(object? sender, EventArgs e)

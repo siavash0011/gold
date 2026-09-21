@@ -14,6 +14,8 @@ namespace GoldShop.Pages
 {
     public partial class HistoryPage : UserControl
     {
+        public event EventHandler? TransactionDeleted;   // 👈 Add this
+
         private readonly PersianCalendar _persianCalendar = new PersianCalendar();
 
         private static readonly CultureInfo PersianCulture =
@@ -207,15 +209,10 @@ namespace GoldShop.Pages
         // DELETE
         // ============================================================
 
-        private void DeleteButton_Click(
-            object sender,
-            RoutedEventArgs e)
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-
-            if (button == null)
-                return;
-
+            if (button == null) return;
             int id = Convert.ToInt32(button.Tag);
 
             var result = MessageBox.Show(
@@ -224,39 +221,45 @@ namespace GoldShop.Pages
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);
 
-            if (result != MessageBoxResult.Yes)
-                return;
+            if (result != MessageBoxResult.Yes) return;
 
             try
             {
                 using (var db = new AppDbContext())
                 {
-                    var transaction =
-                        db.Transactions.Find(id);
-
+                    var transaction = db.Transactions.Find(id);
                     if (transaction != null)
                     {
-                        db.Transactions.Remove(transaction);
+                        // 🔁 Reverse stock effect
+                        var stock = db.GoldStocks.FirstOrDefault();
+                        if (stock != null)
+                        {
+                            if (transaction.IncludeInProfit) // regular sale
+                            {
+                                stock.CurrentStock += transaction.Weight;
+                            }
+                            else // inventory adjustment (add/remove)
+                            {
+                                stock.CurrentStock -= transaction.Weight;
+                            }
+                        }
 
+                        db.Transactions.Remove(transaction);
                         db.SaveChanges();
                     }
                 }
 
+                // Refresh grid and notify parent to update summary/stock
                 LoadTransactions();
+                TransactionDeleted?.Invoke(this, EventArgs.Empty);
 
-                MessageBox.Show(
-                    "✅ رکورد با موفقیت حذف شد.",
-                    "حذف",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information);
+                MessageBox.Show("✅ رکورد با موفقیت حذف شد.", "حذف",
+                                MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    $"❌ خطا در حذف رکورد:\n{ex.Message}",
-                    "خطا",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
+                MessageBox.Show($"❌ خطا در حذف رکورد:\n{ex.Message}", "خطا",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

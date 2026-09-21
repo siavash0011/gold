@@ -6,6 +6,7 @@ namespace GoldShop.Models
 {
     public class AppDbContext : DbContext
     {
+        public DbSet<SecondHandGoldTransaction> SecondHandGoldTransactions { get; set; }
         public DbSet<GoldStock> GoldStocks { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Client> Clients { get; set; }

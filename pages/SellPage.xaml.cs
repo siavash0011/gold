@@ -24,6 +24,14 @@ namespace GoldShop.Pages
             InitializeGoldStock();
             UpdateSummary();
             UpdateCurrentStockDisplay();
+
+
+            // Subscribe to HistoryPage deletion event
+            HistoryPageControl.TransactionDeleted += (s, e) =>
+            {
+                UpdateSummary();
+                UpdateCurrentStockDisplay();
+            };
         }
 
         // ==================== GOLD STOCK ====================
